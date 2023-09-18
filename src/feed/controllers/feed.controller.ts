@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { FeedService } from '../services/feed.service';
 import { FeedPost } from '../models/post.interface';
 
@@ -15,6 +23,18 @@ export class FeedController {
   @Get()
   async getAllPosts(): Promise<FeedPost[]> {
     const response = this.feedService.findAllPost();
+    return response;
+  }
+
+  @Patch(':id')
+  async update(@Param() id: number, @Body() feedPost: FeedPost): Promise<any> {
+    const response = await this.feedService.updatePost(id, feedPost);
+    return response;
+  }
+
+  @Delete(':id')
+  async delete(@Param() id: number): Promise<any> {
+    const response = await this.feedService.remove(id);
     return response;
   }
 }

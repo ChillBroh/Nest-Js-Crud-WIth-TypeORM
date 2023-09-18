@@ -20,4 +20,14 @@ export class FeedService {
     const response = await this.feedPostRepository.find();
     return response;
   }
+
+  async updatePost(id: number, feedPost: FeedPost): Promise<any> {
+    const response = this.feedPostRepository.update(id, feedPost);
+    return response;
+  }
+
+  async remove(id: number): Promise<any> {
+    const response = await this.feedPostRepository.delete(id);
+    return response;
+  }
 }
