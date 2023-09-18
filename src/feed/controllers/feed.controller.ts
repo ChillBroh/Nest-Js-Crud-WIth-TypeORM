@@ -37,4 +37,10 @@ export class FeedController {
     const response = await this.feedService.remove(id);
     return response;
   }
+
+  @Get(':id')
+  async getOne(@Param() id: number): Promise<FeedPost> {
+    const response = await this.feedService.getOne(id);
+    return response;
+  }
 }

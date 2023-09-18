@@ -30,4 +30,9 @@ export class FeedService {
     const response = await this.feedPostRepository.delete(id);
     return response;
   }
+
+  async getOne(id: number): Promise<FeedPost> {
+    const response = await this.feedPostRepository.findOneById(id);
+    return response;
+  }
 }
