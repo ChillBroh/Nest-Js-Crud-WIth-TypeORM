@@ -1,0 +1,15 @@
+install nest cli : npm i @nestjs/cli
+add project: nest new <project name>
+
+add config for access .env
+use imports in app.module to access .env
+run in localhost://3000
+
+create a module : nest generate module <module name>  or nest g mo <module name>
+create service : nest generate service <service-name> ---flat --no-spec or nest g s <service name> ---flat --no-spec
+create controller : nest generate controller <controller name> --flat --no-spec or nest g c <controller name> ---flat --no-spec
+
+create a modle folder and create a interface inside it. and also entities
+
+
+
