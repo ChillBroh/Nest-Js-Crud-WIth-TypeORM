@@ -12,27 +12,47 @@ export class FeedService {
   ) {}
 
   async createPost(feedPost: FeedPost): Promise<FeedPost> {
-    const response = this.feedPostRepository.save(feedPost);
-    return response;
+    try {
+      const response = await this.feedPostRepository.save(feedPost);
+      return response;
+    } catch (err) {
+      throw err;
+    }
   }
 
   async findAllPost(): Promise<FeedPost[]> {
-    const response = await this.feedPostRepository.find();
-    return response;
+    try {
+      const response = await this.feedPostRepository.find();
+      return response;
+    } catch (err) {
+      throw err;
+    }
   }
 
   async updatePost(id: number, feedPost: FeedPost): Promise<any> {
-    const response = this.feedPostRepository.update(id, feedPost);
-    return response;
+    try {
+      const response = await this.feedPostRepository.update(id, feedPost);
+      return response;
+    } catch (err) {
+      throw err;
+    }
   }
 
   async remove(id: number): Promise<any> {
-    const response = await this.feedPostRepository.delete(id);
-    return response;
+    try {
+      const response = await this.feedPostRepository.delete(id);
+      return response;
+    } catch (err) {
+      throw err;
+    }
   }
 
   async getOne(id: number): Promise<FeedPost> {
-    const response = await this.feedPostRepository.findOneById(id);
-    return response;
+    try {
+      const response = await this.feedPostRepository.findOneById(id);
+      return response;
+    } catch (err) {
+      throw err;
+    }
   }
 }
