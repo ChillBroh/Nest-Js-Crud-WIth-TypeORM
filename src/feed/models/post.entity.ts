@@ -1,9 +1,10 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { FeedPost } from './post.interface';
 
 @Entity()
-export class FeedpostEntity implements FeedPost {
+@Unique(['email'])
+export class FeedpostEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -15,6 +16,7 @@ export class FeedpostEntity implements FeedPost {
   @IsEmail()
   @IsNotEmpty()
   @IsString()
+  @Column()
   email: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

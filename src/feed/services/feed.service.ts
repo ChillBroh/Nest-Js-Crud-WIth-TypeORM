@@ -1,8 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FeedpostEntity } from '../models/post.entity';
 import { Repository } from 'typeorm';
-import { FeedPost } from '../models/post.interface';
+// import { FeedPost } from '../models/post.interface';
 
 @Injectable()
 export class FeedService {
@@ -11,16 +15,19 @@ export class FeedService {
     private readonly feedPostRepository: Repository<FeedpostEntity>,
   ) {}
 
-  async createPost(feedPost: FeedPost): Promise<FeedPost> {
+  async createPost(feedPost: FeedpostEntity): Promise<FeedpostEntity> {
     try {
       const response = await this.feedPostRepository.save(feedPost);
       return response;
     } catch (err) {
+      if (err.code === '23505') {
+        throw new ConflictException('Email is already in use.');
+      }
       throw err;
     }
   }
 
-  async findAllPost(): Promise<FeedPost[]> {
+  async findAllPost(): Promise<any> {
     try {
       const response = await this.feedPostRepository.find();
       return response;
@@ -29,7 +36,7 @@ export class FeedService {
     }
   }
 
-  async updatePost(id: number, feedPost: FeedPost): Promise<any> {
+  async updatePost(id: number, feedPost: FeedpostEntity): Promise<any> {
     try {
       const response = await this.feedPostRepository.update(id, feedPost);
       return response;
@@ -47,7 +54,7 @@ export class FeedService {
     }
   }
 
-  async getOne(id: number): Promise<FeedPost | undefined> {
+  async getOne(id: number): Promise<FeedpostEntity | undefined> {
     try {
       const response = await this.feedPostRepository.findOneById(id);
       return response;
