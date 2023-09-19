@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { FeedService } from '../services/feed.service';
 import { FeedPost } from '../models/post.interface';
@@ -14,6 +16,7 @@ import { FeedPost } from '../models/post.interface';
 export class FeedController {
   constructor(private feedService: FeedService) {}
   @Post('add')
+  @UsePipes(ValidationPipe)
   async create(@Body() post: FeedPost) {
     console.log(post);
     const response = await this.feedService.createPost(post);
@@ -22,25 +25,29 @@ export class FeedController {
 
   @Get()
   async getAllPosts(): Promise<FeedPost[]> {
-    const response = this.feedService.findAllPost();
+    const response = await this.feedService.findAllPost();
     return response;
   }
 
   @Patch(':id')
-  async update(@Param() id: number, @Body() feedPost: FeedPost): Promise<any> {
+  async update(
+    @Param('id') id: number,
+    @Body() feedPost: FeedPost,
+  ): Promise<any> {
     const response = await this.feedService.updatePost(id, feedPost);
     return response;
   }
 
   @Delete(':id')
-  async delete(@Param() id: number): Promise<any> {
+  async delete(@Param('id') id: number): Promise<any> {
     const response = await this.feedService.remove(id);
     return response;
   }
 
   @Get(':id')
-  async getOne(@Param() id: number): Promise<FeedPost> {
+  async getOne(@Param('id') id: number): Promise<any> {
     const response = await this.feedService.getOne(id);
-    return response;
+    if (response === undefined) return response;
+    else return 'no response';
   }
 }
