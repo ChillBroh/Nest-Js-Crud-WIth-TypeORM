@@ -56,7 +56,7 @@ export class FeedService {
 
   async getOne(id: number): Promise<FeedpostEntity | undefined> {
     try {
-      const response = await this.feedPostRepository.findOneById(id);
+      const response = await this.feedPostRepository.findOneBy({ id });
       return response;
     } catch (err) {
       throw err;
